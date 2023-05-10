@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+    <title>Edit customer</title>
+</h:head>
+<h:body>
+    <h:form>
+        <h3>Enter id:</h3>
+        <h:inputText id="ID" value="#{customerBean.id}">
+            <f:validator validatorId="idValidator"/>
+        </h:inputText>
+        <h:commandButton action="#{customerBean.getCustomerById()}" value="Find"/>
+        <h:message for="ID" errorStyle="color: red"/>
+        <c:if test="#{customerBean.id != null}">
+            <c:if test="#{customerBean.customer == null}">
+                <br/><br/>
+                <h:outputText value="There is no customer with this ID!" style="color: red"/>
+            </c:if>
+        </c:if>
+        <h3>Name: </h3>
+        <h:inputText id="name" value="#{customerBean.name}">
+            <c:if test="#{customerBean.customer != null}">
+                <f:validator validatorId="emptyFieldValidator"/>
+                <f:validator validatorId="nameValidator"/>
+            </c:if>
+        </h:inputText>
+        <h:message for="name" errorStyle="color: red"/>
+        <h3>Address1: </h3>
+        <h:inputText id="address" value="#{customerBean.address}">
+            <c:if test="#{customerBean.customer != null}">
+                <f:validator validatorId="emptyFieldValidator"/>
+                <f:validator validatorId="addressValidator"/>
+            </c:if>
+        </h:inputText>
+        <h:message for="address" errorStyle="color: red"/>
+        <h3>Address2: </h3>
+        <h:inputText id="city" value="#{customerBean.city}">
+            <c:if test="#{customerBean.customer != null}">
+                <f:validator validatorId="emptyFieldValidator"/>
+                <f:validator validatorId="cityValidator"/>
+            </c:if>
+        </h:inputText>
+        <h:message for="city" errorStyle="color: red"/>
+        <br/><br/>
+        <c:if test="#{customerBean.edited == true}">
+            <h:outputText value="Customer has been successfully edited!" style="color: green"/>
+        </c:if>
+        <br/>
+        <h:commandButton action="#{customerBean.editCustomer()}" value="Edit"/>
+    </h:form>
+    <br/><br/>
+    <h:button outcome="index.html" value="Back"/>
+</h:body>
+</html>
